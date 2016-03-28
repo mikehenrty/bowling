@@ -1,10 +1,18 @@
 body {
   color: white;
   background: black;
+  font-size: 16px;
 }
+
+.tiny {
+  font-size: 12px;
+}
+
 
 td {
   border: 1px solid white;
+  text-align: center;
+  padding: 1px 3px;
 }
 
 .current td {

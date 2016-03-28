@@ -75,6 +75,14 @@
       return score;
     },
 
+    getFrameString: function(player, frame) {
+      if (player.frames[frame].length === 0) {
+        return '~';
+      } else {
+        return Rules.calculateFrameScore(player, frame);
+      }
+    },
+
     calculateFrameScore: function(player, frame) {
       var scores = player.frames[frame];
       var total = 0;

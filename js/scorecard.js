@@ -50,6 +50,12 @@
     }
   };
 
+  Scorecard.prototype.getFrameContent = function(player, frame) {
+    return Rules.getAttemptString(frame, player, 0) + ' - ' +
+      Rules.getAttemptString(frame, player, 1) + '<br />' +
+      '<span class="tiny">' + Rules.getFrameString(player, frame) + '</span>';
+  };
+
   Scorecard.prototype.update = function(currentFrame, currentPlayer) {
     for (var p = 0; p < this.players.length; p++) {
       var row = this.playerRows[p];
@@ -58,9 +64,7 @@
         // Plus one because the first cell is player name.
         var cell = row.children[i + 1];
         cell.classList.toggle('current', (i === currentFrame));
-        cell.textContent =
-          Rules.getAttemptString(i, this.players[p], 0) + ' - ' +
-          Rules.getAttemptString(i, this.players[p], 1)
+        cell.innerHTML = this.getFrameContent(this.players[p], i);
       }
       // Again, plus one because the first cell is player name.
       row.children[MAX_FRAMES + 1].textContent =
