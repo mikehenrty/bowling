@@ -1,11 +1,16 @@
 body {
   color: white;
-  background: blue;
+  background: black;
 }
 
 td {
   border: 1px solid white;
 }
+
 .current td {
-  border: 1px solid red;
+  border: 1px solid yellow;
+}
+
+.current td.current {
+  border: 2px solid red;
 }

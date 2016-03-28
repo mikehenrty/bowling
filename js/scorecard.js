@@ -50,13 +50,14 @@
     }
   };
 
-  Scorecard.prototype.update = function(currentPlayer) {
+  Scorecard.prototype.update = function(currentFrame, currentPlayer) {
     for (var p = 0; p < this.players.length; p++) {
       var row = this.playerRows[p];
       row.classList.toggle('current', (p === currentPlayer));
       for (var i = 0; i < MAX_FRAMES; i++) {
         // Plus one because the first cell is player name.
         var cell = row.children[i + 1];
+        cell.classList.toggle('current', (i + 1 === currentFrame));
         cell.textContent = JSON.stringify(this.players[p].frames[i]);
       }
       // Again, plus one because the first cell is player name.

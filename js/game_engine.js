@@ -72,6 +72,7 @@
     } else {
       winContainer.textContent = this.players[winner].name + ' wins!';
     }
+    this.scorecard.update(-1, winner);
     this.lane.container.remove();
     this.container.appendChild(winContainer);
     this.displayResetButton();
@@ -100,9 +101,6 @@
     this.container = document.body;
     this.container.innerHTML = '';
 
-    this.frameContainer = document.createElement('p');
-    this.container.appendChild(this.frameContainer);
-
     this.scorecard.render();
     this.container.appendChild(this.scorecard.container);
 
@@ -111,9 +109,7 @@
   };
 
   GameEngine.prototype.update = function() {
-    this.frameContainer.textContent = this.isGameOver() ?
-      'Game Over' :'Frame ' + this.frame;
-    this.scorecard.update(this.currentPlayer);
+    this.scorecard.update(this.frame, this.currentPlayer);
   };
 
   window.GameEngine = GameEngine;
