@@ -12,6 +12,32 @@
       return scores.length === 2 || scores[0] === MAX_PINS;
     },
 
+    isValidAttempt: function(frame, player, attempt, score) {
+      if (frame >= MAX_FRAMES) {
+        console.error('Rules: too many frames', frame);
+        return false;
+      }
+
+      if (attempt < 0 || attempt > 1) {
+        console.error('Rules: invalid attempt number', attempt);
+        return false;
+      }
+
+      if (score < 0 || score > MAX_PINS) {
+        console.error('Rules: invalid attempt score', score);
+        return false;
+      }
+
+      if (attempt === 1) {
+        var firstAttemptScore = player.frames[frame][0];
+        if (firstAttemptScore + score > MAX_PINS) {
+          console.error('Rules: both attempts exceeded pins');
+          return false;
+        }
+      }
+      return true;
+    },
+
     isStrike: function(frame, player) {
       var frame = player.frames[frame];
       var score = frame[0];

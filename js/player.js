@@ -25,5 +25,9 @@
     this.score += pins;
   };
 
+  Player.prototype.getCurrentAttempt = function(frame) {
+    return this.frames[frame].length;
+  };
+
   window.Player = Player;
 })();

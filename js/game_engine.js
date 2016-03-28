@@ -93,6 +93,12 @@
     }
 
     var player = this.players[this.currentPlayer];
+    var attempt = player.getCurrentAttempt(this.frame);
+    // Make sure this roll was valid before continuing.
+    if (!Rules.isValidAttempt(this.frame, player, attempt, pins)) {
+      return;
+    }
+
     player.addPins(this.frame, pins);
     if (Rules.isTurnOver(this.frame, player)) {
       this.nextPlayer();
