@@ -21,10 +21,10 @@
     game.start();
 
     // When game is reset, start attract mode.
-    game.onreset(function() {
+    game.onreset = function() {
       document.body.innerHTML = '';
       startAttract();
-    });
+    };
   }
 
   document.addEventListener('DOMContentLoaded', startAttract);
