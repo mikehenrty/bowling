@@ -1,6 +1,11 @@
 (function() {
   'use strict';
 
+  /**
+   * main.js
+   * Responsible for starting and resetting game.
+   */
+
   function startAttract() {
     var startButton = document.createElement('button');
     startButton.textContent = 'Start Game!';
@@ -14,6 +19,12 @@
   function startGame() {
     var game = new GameEngine();
     game.start();
+
+    // When game is reset, start attract mode.
+    game.onreset(function() {
+      document.body.innerHTML = '';
+      startAttract();
+    });
   }
 
   document.addEventListener('DOMContentLoaded', startAttract);
