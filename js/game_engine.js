@@ -11,8 +11,8 @@
   function GameEngine() {
     this.players = [
       new Player('Player 1'),
-      new Player('Player 1.3'),
-      new Player('Player 2')
+      new Player('Player 2'),
+      new Player('Player 3')
     ];
 
     this.gameover = false;
@@ -28,6 +28,7 @@
     this.frame = 1;
     this.currentPlayer = 0;
     this.render();
+    this.update();
   };
 
   GameEngine.prototype.checkWin = function() {
@@ -59,6 +60,14 @@
       }
       this.lane.container.remove();
       this.container.appendChild(winContainer);
+
+      // Allow the game to be reset.
+      var resetButton = document.createElement('button');
+      resetButton.textContent = 'Reset';
+      resetButton.onclick = function() {
+        this.onreset && this.onreset();
+      }.bind(this);
+      this.container.appendChild(resetButton);
     }
   };
 
@@ -74,7 +83,7 @@
       this.currentPlayer = 0;
       this.frame++;
     }
-    this.render();
+    this.update();
 
     this.checkWin();
   };
@@ -82,26 +91,26 @@
   GameEngine.prototype.render = function() {
     this.container.innerHTML = '';
 
-    var frameDisplay = document.createElement('p');
-    frameDisplay.textContent = 'Frame ' + this.frame;
-    this.container.appendChild(frameDisplay);
+    this.frameContainer = document.createElement('p');
+    this.container.appendChild(this.frameContainer);
 
-    this.players.forEach(function(player) {
-      var el = document.createElement('p');
-      el.textContent = player.name + ':: ' + player.score;
-      this.container.appendChild(el);
-    }.bind(this));
+    this.playersContainer = [];
+    for (var i = 0; i < this.players.length; i++) {
+      var pContainer = document.createElement('p');
+      this.playersContainer.push(pContainer);
+      this.container.appendChild(pContainer);
+    }
 
     this.lane.render();
     this.container.appendChild(this.lane.container);
+  };
 
-    // Allow the game to be reset at any time.
-    var resetButton = document.createElement('button');
-    resetButton.textContent = 'Reset';
-    resetButton.onclick = function() {
-      this.onreset && this.onreset();
-    }.bind(this);
-    this.container.appendChild(resetButton);
+  GameEngine.prototype.update = function() {
+    this.frameContainer.textContent = 'Frame ' + this.frame;
+    for (var i = 0; i < this.players.length; i++) {
+      this.playersContainer[i].textContent =
+        this.players[i].name + ': ' + this.players[i].score;
+    }
   };
 
   window.GameEngine = GameEngine;
