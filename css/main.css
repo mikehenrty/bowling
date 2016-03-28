@@ -3,6 +3,9 @@ body {
   background: blue;
 }
 
-table tr td {
+td {
   border: 1px solid white;
+}
+.current td {
+  border: 1px solid red;
 }

@@ -50,9 +50,10 @@
     }
   };
 
-  Scorecard.prototype.update = function() {
+  Scorecard.prototype.update = function(currentPlayer) {
     for (var p = 0; p < this.players.length; p++) {
       var row = this.playerRows[p];
+      row.classList.toggle('current', (p === currentPlayer));
       for (var i = 0; i < MAX_FRAMES; i++) {
         // Plus one because the first cell is player name.
         var cell = row.children[i + 1];

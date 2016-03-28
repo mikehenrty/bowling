@@ -113,7 +113,7 @@
   GameEngine.prototype.update = function() {
     this.frameContainer.textContent = this.isGameOver() ?
       'Game Over' :'Frame ' + this.frame;
-    this.scorecard.update();
+    this.scorecard.update(this.currentPlayer);
   };
 
   window.GameEngine = GameEngine;
