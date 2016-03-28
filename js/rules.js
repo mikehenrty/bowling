@@ -75,17 +75,38 @@
       return score;
     },
 
-    getFrameString: function(player, frame) {
+    getFrameString: function(frame, player) {
       if (player.frames[frame].length === 0) {
         return '~';
       } else {
-        return Rules.calculateFrameScore(player, frame);
+        return Rules.calculateFrameScore(frame, player);
       }
     },
 
-    calculateFrameScore: function(player, frame) {
-      var scores = player.frames[frame];
+    calculateComplexFrameScore: function(frame, player) {
+      var total = MAX_PINS;
+      var nextFrame = player.frames[frame + 1];
+
+      if (typeof nextFrame[0] !== 'undefined') {
+        total += nextFrame[0];
+      }
+
+      if (Rules.isStrike(frame, player)
+          && typeof nextFrame[1] !== 'undefined') {
+        total += nextFrame[1];
+      }
+
+      return total;
+    },
+
+    calculateFrameScore: function(frame, player) {
+      // If it's complex, do calculations in another function.
+      if (Rules.isSpare(frame, player) || Rules.isStrike(frame, player)) {
+        return Rules.calculateComplexFrameScore(frame, player);
+      }
+
       var total = 0;
+      var scores = player.frames[frame];
       if (typeof scores[0] !== 'undefined') {
         total += scores[0];
       }
@@ -98,7 +119,7 @@
     calculateScore: function(player) {
       var total = 0;
       for (var i = 0; i < MAX_FRAMES; i++) {
-        total += Rules.calculateFrameScore(player, i);
+        total += Rules.calculateFrameScore(i, player);
       }
       return total;
     }

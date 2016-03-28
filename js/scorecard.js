@@ -53,7 +53,7 @@
   Scorecard.prototype.getFrameContent = function(player, frame) {
     return Rules.getAttemptString(frame, player, 0) + ' - ' +
       Rules.getAttemptString(frame, player, 1) + '<br />' +
-      '<span class="tiny">' + Rules.getFrameString(player, frame) + '</span>';
+      '<span class="tiny">' + Rules.getFrameString(frame, player) + '</span>';
   };
 
   Scorecard.prototype.update = function(currentFrame, currentPlayer) {
