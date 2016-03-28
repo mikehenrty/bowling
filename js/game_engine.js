@@ -2,12 +2,22 @@
   'use strict';
 
   function GameEngine() {
-    this.el = document.createElement('div');
-    this.el.textContent = 'Game started!';
+    this.players = [
+      new Player('Player 1')
+    ];
   }
 
   GameEngine.prototype.start = function() {
-    document.body.appendChild(this.el);
+    this.render();
+  };
+
+  GameEngine.prototype.render = function() {
+    document.body.innerHTML = '';
+    this.players.forEach(function(player) {
+      var el = document.createElement('p');
+      el.textContent = player.name;
+      document.body.appendChild(el);
+    });
   };
 
   window.GameEngine = GameEngine;
