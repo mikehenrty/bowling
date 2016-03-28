@@ -20,14 +20,14 @@
   }
 
   GameEngine.prototype.start = function() {
-    this.frame = 1;
+    this.frame = 0;
     this.currentPlayer = 0;
     this.render();
     this.update();
   };
 
   GameEngine.prototype.isGameOver = function() {
-    return this.frame > MAX_FRAMES;
+    return this.frame >= MAX_FRAMES;
   };
 
   GameEngine.prototype.getWinner = function() {
@@ -78,17 +78,24 @@
     this.displayResetButton();
   };
 
+  GameEngine.prototype.nextPlayer = function() {
+    this.currentPlayer++;
+    if (this.currentPlayer >= this.players.length) {
+      this.currentPlayer = 0;
+      this.frame++;
+    }
+  };
+
   GameEngine.prototype.roll = function(pins) {
     if (this.isGameOver()) {
       // Do nothing if game is over.
       return;
     }
 
-    this.players[this.currentPlayer].addPins(this.frame, pins);
-    this.currentPlayer++;
-    if (this.currentPlayer >= this.players.length) {
-      this.currentPlayer = 0;
-      this.frame++;
+    var player = this.players[this.currentPlayer];
+    player.addPins(this.frame, pins);
+    if (Rules.isTurnOver(this.frame, player)) {
+      this.nextPlayer();
     }
     this.update();
 

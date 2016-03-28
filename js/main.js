@@ -1,8 +1,9 @@
 /**
  * Globals
  */
-const MAX_FRAMES = 10;
 const MAX_PLAYERS = 4;
+const MAX_FRAMES = 10;
+const MAX_PINS = 10;
 
 (function() {
   'use strict';

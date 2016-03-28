@@ -57,8 +57,10 @@
       for (var i = 0; i < MAX_FRAMES; i++) {
         // Plus one because the first cell is player name.
         var cell = row.children[i + 1];
-        cell.classList.toggle('current', (i + 1 === currentFrame));
-        cell.textContent = JSON.stringify(this.players[p].frames[i]);
+        cell.classList.toggle('current', (i === currentFrame));
+        cell.textContent =
+          Rules.getAttemptString(i, this.players[p], 0) + ' - ' +
+          Rules.getAttemptString(i, this.players[p], 1)
       }
       // Again, plus one because the first cell is player name.
       row.children[MAX_FRAMES + 1].textContent = this.players[p].score;

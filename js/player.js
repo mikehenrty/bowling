@@ -21,7 +21,7 @@
       console.error('Cannot add frames', this.name, frame, pins);
       return;
     }
-    this.frames[frame - 1].push(pins);
+    this.frames[frame].push(pins);
     this.score += pins;
   };
 
