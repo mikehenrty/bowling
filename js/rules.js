@@ -74,6 +74,26 @@
 
       return score;
     },
+
+    calculateFrameScore: function(player, frame) {
+      var scores = player.frames[frame];
+      var total = 0;
+      if (typeof scores[0] !== 'undefined') {
+        total += scores[0];
+      }
+      if (typeof scores[1] !=='undefined') {
+        total += scores[1];
+      }
+      return total;
+    },
+
+    calculateScore: function(player) {
+      var total = 0;
+      for (var i = 0; i < MAX_FRAMES; i++) {
+        total += Rules.calculateFrameScore(player, i);
+      }
+      return total;
+    }
   };
 
   window.Rules = Rules;

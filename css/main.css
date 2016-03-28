@@ -12,5 +12,5 @@ td {
 }
 
 .current td.current {
-  border: 2px solid red;
+  border: 1px solid red;
 }

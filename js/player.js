@@ -12,14 +12,15 @@
     for (var i = 0; i < MAX_FRAMES; i++) {
       this.frames[i] = [];
     }
-
-    this.score = 0; // temporary, use rule based logic
   }
 
   Player.prototype.addPins = function(frame, pins) {
     if (frame > MAX_FRAMES) {
-      console.error('Cannot add frames', this.name, frame, pins);
+      console.error('Cannot add attempt', this.name, frame);
       return;
+    }
+    if (this.frames[frame].length > 1) {
+      console.error('Cannat add another attempt', this.name, frame);
     }
     this.frames[frame].push(pins);
     this.score += pins;

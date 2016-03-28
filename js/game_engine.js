@@ -33,16 +33,17 @@
   GameEngine.prototype.getWinner = function() {
     // Get player with highest score.
     var winningPlayer = 0;
-    var highScore = this.players[winningPlayer].score;
+    var highScore = Rules.calculateScore(this.players[winningPlayer]);
     var isTie = false;
     for (var i = 1; i < this.players.length; i++) {
-      if (this.players[i].score === highScore) {
+      var currentScore = Rules.calculateScore(this.players[i]);
+      if (currentScore === highScore) {
         isTie = true;
       } else {
-        isTie = false;
-        if (this.players[i].score > highScore) {
+        if (currentScore > highScore) {
+          isTie = false;
           winningPlayer = i;
-          highScore = this.players[i].score;
+          highScore = currentScore;
         }
       }
     }

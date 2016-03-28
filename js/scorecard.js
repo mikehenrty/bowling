@@ -63,7 +63,8 @@
           Rules.getAttemptString(i, this.players[p], 1)
       }
       // Again, plus one because the first cell is player name.
-      row.children[MAX_FRAMES + 1].textContent = this.players[p].score;
+      row.children[MAX_FRAMES + 1].textContent =
+        Rules.calculateScore(this.players[p]);
     }
   };
 
