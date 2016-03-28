@@ -1,8 +1,6 @@
 (function() {
   'use strict';
 
-  const MAX_FRAMES = 10;
-
   /**
    * Game Engine
    * Orchestrates input, scoring and game display.
@@ -19,8 +17,7 @@
     this.frame = 0;
     this.lane = new Lane();
     this.lane.onroll = this.roll.bind(this);
-
-    this.container = document.body;
+    this.scorecard = new Scorecard(this.players);
   }
 
   GameEngine.prototype.start = function() {
@@ -77,7 +74,7 @@
       return;
     }
 
-    this.players[this.currentPlayer].addPoints(pins);
+    this.players[this.currentPlayer].addPins(this.frame, pins);
     this.currentPlayer++;
     if (this.currentPlayer >= this.players.length) {
       this.currentPlayer = 0;
@@ -89,17 +86,14 @@
   };
 
   GameEngine.prototype.render = function() {
+    this.container = document.body;
     this.container.innerHTML = '';
 
     this.frameContainer = document.createElement('p');
     this.container.appendChild(this.frameContainer);
 
-    this.playersContainer = [];
-    for (var i = 0; i < this.players.length; i++) {
-      var pContainer = document.createElement('p');
-      this.playersContainer.push(pContainer);
-      this.container.appendChild(pContainer);
-    }
+    this.scorecard.render();
+    this.container.appendChild(this.scorecard.container);
 
     this.lane.render();
     this.container.appendChild(this.lane.container);
@@ -107,10 +101,7 @@
 
   GameEngine.prototype.update = function() {
     this.frameContainer.textContent = 'Frame ' + this.frame;
-    for (var i = 0; i < this.players.length; i++) {
-      this.playersContainer[i].textContent =
-        this.players[i].name + ': ' + this.players[i].score;
-    }
+    this.scorecard.update();
   };
 
   window.GameEngine = GameEngine;

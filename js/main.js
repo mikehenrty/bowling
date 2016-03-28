@@ -1,3 +1,8 @@
+/**
+ * Globals
+ */
+const MAX_FRAMES = 10;
+
 (function() {
   'use strict';
 

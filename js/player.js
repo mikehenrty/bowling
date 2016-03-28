@@ -3,16 +3,26 @@
 
   /**
    * Player
-   * Keeps track of player state like score.
+   * Keeps track of player state.
    */
 
   function Player(name) {
     this.name = name;
-    this.score = 0;
+    this.frames = [];
+    for (var i = 0; i < MAX_FRAMES; i++) {
+      this.frames[i] = [];
+    }
+
+    this.score = 0; // temporary, use rule based logic
   }
 
-  Player.prototype.addPoints = function(points) {
-    this.score += points;
+  Player.prototype.addPins = function(frame, pins) {
+    if (frame > MAX_FRAMES) {
+      console.error('Cannot add frames', this.name, frame, pins);
+      return;
+    }
+    this.frames[frame - 1].push(pins);
+    this.score += pins;
   };
 
   window.Player = Player;
