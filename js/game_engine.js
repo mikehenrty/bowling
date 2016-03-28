@@ -6,12 +6,12 @@
    * Orchestrates input, scoring and game display.
    */
 
-  function GameEngine() {
-    this.players = [
-      new Player('Player 1'),
-      new Player('Player 2'),
-      new Player('Player 3')
-    ];
+  function GameEngine(playerCount) {
+    this.players = [];
+    for (var i = 0; i < playerCount; i++) {
+      var playerName = 'Player ' + (i + 1);
+      this.players.push(new Player(playerName));
+    }
 
     this.frame = 0;
     this.lane = new Lane();
@@ -70,7 +70,7 @@
     if (winner === -1) {
       winContainer.textContent = 'It\'s a tie :/';
     } else {
-      winContainer.textContent = this.players[winningPlayer].name + ' wins!';
+      winContainer.textContent = this.players[winner].name + ' wins!';
     }
     this.lane.container.remove();
     this.container.appendChild(winContainer);
