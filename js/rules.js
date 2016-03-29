@@ -12,14 +12,9 @@
       return scores.length === 2 || scores[0] === MAX_PINS;
     },
 
-    isValidAttempt: function(frame, player, attempt, score) {
+    isValidAttempt: function(frame, player, score) {
       if (frame >= MAX_FRAMES) {
         console.error('Rules: too many frames', frame);
-        return false;
-      }
-
-      if (attempt < 0 || attempt > 1) {
-        console.error('Rules: invalid attempt number', attempt);
         return false;
       }
 
@@ -28,7 +23,7 @@
         return false;
       }
 
-      if (attempt === 1) {
+      if (player.getCurrentAttempt(frame) === 1) {
         var firstAttemptScore = player.frames[frame][0];
         if (firstAttemptScore + score > MAX_PINS) {
           console.error('Rules: both attempts exceeded pins');
@@ -87,12 +82,12 @@
       var total = MAX_PINS;
       var nextFrame = player.frames[frame + 1];
 
-      if (typeof nextFrame[0] !== 'undefined') {
+      if (nextFrame && typeof nextFrame[0] !== 'undefined') {
         total += nextFrame[0];
       }
 
       if (Rules.isStrike(frame, player)
-          && typeof nextFrame[1] !== 'undefined') {
+          && nextFrame && typeof nextFrame[1] !== 'undefined') {
         total += nextFrame[1];
       }
 

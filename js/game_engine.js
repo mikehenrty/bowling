@@ -13,8 +13,7 @@
       this.players.push(new Player(playerName));
     }
 
-    this.frame = 0;
-    this.lane = new Lane();
+    this.lane = new Lane(this.players);
     this.lane.onroll = this.roll.bind(this);
     this.scorecard = new Scorecard(this.players);
   }
@@ -53,7 +52,7 @@
 
   GameEngine.prototype.displayResetButton = function() {
     var resetButton = document.createElement('button');
-    resetButton.textContent = 'Reset';
+    resetButton.textContent = 'Start Over';
     resetButton.onclick = function() {
       this.onreset && this.onreset();
     }.bind(this);
@@ -94,9 +93,8 @@
     }
 
     var player = this.players[this.currentPlayer];
-    var attempt = player.getCurrentAttempt(this.frame);
     // Make sure this roll was valid before continuing.
-    if (!Rules.isValidAttempt(this.frame, player, attempt, pins)) {
+    if (!Rules.isValidAttempt(this.frame, player, pins)) {
       return;
     }
 
@@ -124,6 +122,7 @@
 
   GameEngine.prototype.update = function() {
     this.scorecard.update(this.frame, this.currentPlayer);
+    this.lane.update(this.frame, this.currentPlayer);
   };
 
   window.GameEngine = GameEngine;
